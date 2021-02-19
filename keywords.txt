@@ -1,0 +1,5 @@
+Click	KEYWORD1
+Onset	KEYWORD1
+Sync	KEYWORD1
+Tempo	KEYWORD1
+updateOnset	KEYWORD2
