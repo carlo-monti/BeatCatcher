@@ -1,7 +1,7 @@
 #include "Onset.h"
 
-Onset::Onset(int &t, int piezo, int bounce, int thr){
-  _tau = &t;
+Onset::Onset(Click &clk, int piezo, int bounce, int thr){
+  _clk = &clk;
   _piezoPin = piezo;
   _bounceTime = bounce;
   _threshold = thr;
@@ -28,7 +28,7 @@ void Onset::initializeOnset(){
 bool Onset::updateOnset(){
   _currentMillis = millis();
   // update the index of last relevant onset
-  while(onsets[last] < (_currentMillis - (*_tau * 16))){
+  while(onsets[last] < (_currentMillis - (_clk->tau * 8))){
     syncDone[last] = false;
     if(last == next){
       break;
@@ -38,13 +38,12 @@ bool Onset::updateOnset(){
 
   // checks for new onset
   if(analogRead(_piezoPin) > _threshold){
-    long currentTime = _currentMillis;
     // set the new onset
-    if(currentTime > _nextAllowedOnset){
-      onsets[next] = currentTime;
-      Serial.println("<-onset");
+    if(_currentMillis > _nextAllowedOnset){
+      onsets[next] = _currentMillis;
+      //Serial.print("<-onset: ");Serial.println(_currentMillis);
       next = (next + 1) % onsetsLength;
-      _nextAllowedOnset = currentTime + _bounceTime;
+      _nextAllowedOnset = _currentMillis + _bounceTime;
       return true;
     }
   }

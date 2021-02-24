@@ -4,18 +4,19 @@
 
 class Click{
   public:
-    Click(int piezo, int key);
+    Click(int piezo);
     void setTau(int value);
     void updateTauSync(long deltaTauSync);
     void updateTauTempo(long deltaTauTempo);
-    void startClick();
-    void stopClick();
+    void initializeClick();
     void updateClick();
+    void resetClick(); // to be called at run-time to set new tempo
     
     int tau; // tactum in ms: 1/8
+    long expectedClick; // currentExpectedClick (absolute value)
+    int barPosition; // current position within the 2 bar length (0-15)
     
   private:
-    void _resetClick(); // to be called at run-time to set new tempo
     
     int _piezoPin; // pin for the piezo
     int _threshold; // gate threshold for the onset to be detected (special for metronome reset)
@@ -24,8 +25,9 @@ class Click{
     long _nextClick; // next scheduled click
     long _nextHalfClick; // point between two scheduled clicks
     long _deltaTauSync; // delta for the synchronizing process
-    int _barPosition; // current position within the 2 bar length (0-15)
-    int _aKey; // temporary pin to activate reset
+    int _midiTau; // value for midi
+    long _nextMidiClick;
+    
 };
 
 #endif

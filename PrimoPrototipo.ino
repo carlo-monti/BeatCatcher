@@ -1,31 +1,28 @@
 #include "definitions.h"
 
-Click clk = Click(piezo2,aKey);
-Onset ons = Onset(clk.tau, piezo1);
-Sync syn = Sync(ons);
-//Tempo tmp = Tempo(clk.tau);
+Click clk = Click(piezo1);
+Onset ons = Onset(clk, piezo1);
+Sync syn = Sync(ons, clk);
+Tempo tmp = Tempo(ons, clk);
 
 void setup() {
   Serial.begin(9600);
-  setupPinsAndParameters();
+  setupPinsAndParameters(); // from definitions.h
+  clk.initializeClick();
   ons.initializeOnset();
-  clk.setTau(1000);
+  syn.initializeSync();
+  tmp.initializeTempo();
+  if(digitalRead(aKey)==0){
+    Serial.println("Reset");
+    delay(300);
+    clk.resetClick();
+  }
 }
 
 void loop() {
-  ons.updateOnset();
-  //clk.updateClick();
-}
-
-void printOnsetsArrayc(){
-  Serial.println("----------");
-  for(int i=0;i<20;i++){
-    if(i==ons.last){
-      Serial.println("last ");
-    }
-    if(i==ons.next){
-      Serial.println("next ");
-    }
-    Serial.println(ons.onsets[i]);
+  if(ons.updateOnset()){
+    syn.updateSync();
+    tmp.updateTempo();
   }
-} // debug
+  clk.updateClick();
+}

@@ -4,11 +4,12 @@
 #define THRESHOLD_DEFAULT 20
 #define NUMBER_OF_ONSETS 800
 #include <Arduino.h>
+#include "Click.h"
 
 class Onset{
   public:
   
-    Onset(int& t, int piezo, int bounce=BOUNCE_DEFAULT, int thr=THRESHOLD_DEFAULT);
+    Onset(Click &clk, int piezo, int bounce=BOUNCE_DEFAULT, int thr=THRESHOLD_DEFAULT);
     void setThreshold(int thr);
     void setBounceTime(int bounce);
     void initializeOnset(); // to be called in setup
@@ -21,8 +22,8 @@ class Onset{
     int last; // index of last onset of the 2 bars
     
   private:
-    
-    int* _tau; // pointer to metronome tau
+
+    Click* _clk; // pointer to click object
     int _piezoPin; // pin for the piezo
     int _threshold; // gate threshold for the onset to be detected
     int _bounceTime; // ms to wait for the new onset after a the last one (to stabilize)

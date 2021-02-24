@@ -5,20 +5,18 @@
 
 class Sync{
   public:
-    Sync(Onset &onsets);
+    Sync(Onset &onsets, Click &clk);
     void initializeSync();
     void setLSync(int index, float value);
     void setBeta(float value);
-    void setSigmaSync(int value);
-    void setThresholdSync(float value);
+    void setThreshold(float value);
     void updateSync();
     
   private:
-    int* _tau; // pointer to click tau
+    Click* _clk; // pointer to click object
     Onset* _ons; // pointer to onset object
-    float _lSync[16]; // likelihood of observing beat
-    float _sigmaSync; // standard deviation
-    int _deltaTauSync;
+    float _lSync[16] = {1,0.4,1,0.4,1,0.4,1,0.4,1,0.4,1,0.4,1,0.4,1,0.4}; // likelihood of observing beat
+    int _sigmaSync; 
     float _thetaSync; // threshold
     float _beta; // scaling factor
 };
