@@ -15,8 +15,12 @@ void Sync::initializeSync(){
   _lastAccuracyOfCurrentLayer = 0;
 }
 
-void Sync::setLSync(int index, float value){
-  _lSync[index] = value;
+void Sync::setLSync(bool type, int index, float value){
+  if(type){
+    _lSyncSnare[index] = value;
+  }else{
+    _lSyncKick[index] = value;
+  }
 }
 
 void Sync::setBeta(float value){
@@ -29,34 +33,42 @@ void Sync::updateSync(){
   long error = (_ons->onsets[_ons->currentOnset] - _clk->expectedClick); // current onset - expected onset (tn - E[tn])
   float accuracy;
   float gaussian;
+  float lSync;
+  if(_ons->isSnare[_ons->currentOnset]){
+    Serial.println("SYNC Snare -----------");
+    lSync = _lSyncSnare[_clk->barPosition];
+  }else{
+    Serial.println("SYNC Kick -----------");
+    lSync = _lSyncKick[_clk->barPosition];
+  }
   if(error > (_clk->tau / 3)){ // notch for 16th
     _ons->is16th[_ons->currentOnset] = 1;
-    Serial.println("SYNC -> Notch");
+    Serial.println("On notch");
     return;
   }
   int twoSigmaSquared = -2 * pow(_sigmaSync,2); // calculate -2 * sigma^2
   gaussian = exp(pow(error,2) / twoSigmaSquared); // calculate gaussian
-  accuracy = gaussian * _lSync[_clk->barPosition]; // calculate accuracy
-  Serial.print("SYNC -> Sigma: ");Serial.print(_sigmaSync);Serial.print(" Threshold: ");Serial.print(_thetaSync);Serial.print(" Error: ");Serial.print(error);Serial.print(" Gaussian: ");Serial.print(gaussian);Serial.print(" lSync: ");Serial.print(_lSync[_clk->barPosition]);Serial.print(" Accuracy: ");Serial.println(accuracy);
+  accuracy = gaussian * lSync;
+  //Serial.print("SYNC -> Sigma: ");Serial.print(_sigmaSync);Serial.print(" Threshold: ");Serial.print(_thetaSync);Serial.print(" Error: ");Serial.print(error);Serial.print(" Gaussian: ");Serial.print(gaussian);Serial.print(" lSync: ");Serial.print(_lSync[_clk->barPosition]);Serial.print(" Accuracy: ");Serial.println(accuracy);
 
   if(accuracy > _thetaSync){
-    deltaTauSync = ((gaussian + _beta) / (_beta + 1)) * gaussian * _lSync[_clk->barPosition] * error;
+    deltaTauSync = ((gaussian + _beta) / (_beta + 1)) * accuracy * error;
     if(thisLayer < _currentHigherLayer){
       if(accuracy > _lastAccuracyOfCurrentLayer){
         _accuracyOfLastSync[_clk->barPosition] = accuracy;
         _clk->updateTauSync(deltaTauSync);
-        //Serial.print("SYNC syncs: "); Serial.println(deltaTauSync);
+        Serial.print("syncs: "); Serial.println(deltaTauSync);
       }
     }else{
-      if(accuracy > _accuracyOfLastSync[_clk->barPosition]){
+      if(accuracy > _accuracyOfLastSync[_clk->barPosition]){ // sync
         _accuracyOfLastSync[_clk->barPosition] = accuracy;
         _clk->updateTauSync(deltaTauSync);
-        Serial.print("SYNC -> syncs: "); Serial.print(deltaTauSync);Serial.print(" Error: ");Serial.print(error);
+        Serial.print("syncs: "); Serial.print(deltaTauSync);Serial.print(" Error: ");Serial.print(error);
       }
       if(accuracy >= _thetaSync + 0.1 && thisLayer >= _currentHigherLayer){ // change parameters
         // higher threshold, narrow window
         _thetaSync = _thetaSync + (0.3 * (accuracy - _thetaSync - 0.1));
-        _sigmaSync = max(_clk->tau / 30,_sigmaSync * (_narrowWindowRatio + ((0.7 * _lSync[_clk->barPosition]) - accuracy))); // calculate sigma from current tau
+        _sigmaSync = max(_clk->tau / 30,_sigmaSync * (_narrowWindowRatio + ((0.7 * lSync) - accuracy))); // calculate sigma from current tau
         Serial.print(" new threshold: "); Serial.print(_thetaSync); Serial.print(" new sigmaSync: ");Serial.print(_sigmaSync);
       }
       Serial.println();
@@ -65,10 +77,10 @@ void Sync::updateSync(){
     if(thisLayer >= _currentHigherLayer){ // no sync but change parameters
       // lower threshold, expand window
       _thetaSync = 0.6 * _thetaSync;
-      _sigmaSync = max(_clk->tau / 30,_sigmaSync * (_expandWindowRatio + ((0.7 * _lSync[_clk->barPosition]) - accuracy))); // calculate sigma from current tau
-      Serial.print("SYNC");Serial.print(" new threshold: "); Serial.print(_thetaSync);Serial.print(" sigmaSync: ");Serial.println(_sigmaSync);
+      _sigmaSync = max(_clk->tau / 30,_sigmaSync * (_expandWindowRatio + ((0.7 * lSync) - accuracy))); // calculate sigma from current tau
+      Serial.print(" new threshold: "); Serial.print(_thetaSync);Serial.print(" sigmaSync: ");Serial.println(_sigmaSync);
     }else{
-      Serial.print("SYNC no layer ");Serial.println(_currentHigherLayer);
+      Serial.print(" no layer change ");Serial.println(_currentHigherLayer);
     }
   }
 }

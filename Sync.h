@@ -7,7 +7,7 @@ class Sync{
   public:
     Sync(Onset &onsets, Click &clk);
     void initializeSync();
-    void setLSync(int index, float value);
+    void setLSync(bool type, int index, float value);
     void setBeta(float value);
     void setThreshold(float value);
     void updateSync();
@@ -16,7 +16,8 @@ class Sync{
   private:
     Click* _clk; // pointer to click object
     Onset* _ons; // pointer to onset object
-    float _lSync[16] = {1,0.4,1,0.4,1,0.4,1,0.4,1,0.4,1,0.4,1,0.4,1,0.4}; // likelihood of observing beat
+    float _lSyncKick[16] = {1,0.4,1,0.4,1,0.4,1,0.4,1,0.4,1,0.4,1,0.4,1,0.4}; // likelihood of observing onset for kick
+    float _lSyncSnare[16] = {0,0.4,1,0.4,1,0.4,1,0.4,0,0.4,1,0.4,1,0.4,1,0.4}; // likelihood of observing onset for snare
     int _sigmaSync; 
     float _thetaSync; // threshold
     float _beta; // scaling factor

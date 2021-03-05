@@ -1,18 +1,29 @@
 #include "Onset.h"
 
-Onset::Onset(Click &clk, int piezo, int bounce, int thr){
+Onset::Onset(Click &clk, int piezo0, int piezo1){
   _clk = &clk;
-  _piezoPin = piezo;
-  _bounceTime = bounce;
-  _threshold = thr;
+  _piezo0 = piezo0;
+  _piezo1 = piezo1;
+  _bounceTime0 = 100;
+  _bounceTime1 = 100;
+  _threshold0 = 15;
+  _threshold1 = 15;
 }
 
-void Onset::setBounceTime(int bounce){
-  _bounceTime = bounce; 
+void Onset::setBounceTime(bool piezo, int bounce){
+  if(piezo){
+    _bounceTime1 = bounce; 
+  }else{
+    _bounceTime0 = bounce;       
+  }
 }
 
-void Onset::setThreshold(int thr){
-  _threshold = thr;
+void Onset::setThreshold(bool piezo, int thr){
+  if(piezo){
+    _threshold1 = thr; 
+  }else{
+    _threshold0 = thr;       
+  }
 }
 
 void Onset::initializeOnset(){
@@ -20,7 +31,8 @@ void Onset::initializeOnset(){
     onsets[i]=0;
     is16th[i]=0;
   }
-  _nextAllowedOnset = 0;
+  _nextAllowedOnsetKick = 0;
+  _nextAllowedOnsetSnare = 0;
   last = 0;
   next = 0;
 }
@@ -36,16 +48,27 @@ bool Onset::updateOnset(){
     }
     last = (last + 1) % onsetsLength;
   }
-
-  // checks for new onset
-  if(analogRead(_piezoPin) > _threshold){
+  
+  if(analogRead(_piezo0) > _threshold0){ // checks for new onset for kick
     // set the new onset
-    if(_currentMillis > _nextAllowedOnset){
+    if(_currentMillis > _nextAllowedOnsetKick){
       onsets[next] = _currentMillis;
+      isSnare[next] = 0;
       currentOnset = next;
       //Serial.print("<----------------------onset: ");Serial.println(_currentMillis);
       next = (next + 1) % onsetsLength;
-      _nextAllowedOnset = _currentMillis + _bounceTime;
+      _nextAllowedOnsetKick = _currentMillis + _bounceTime0;
+      return true;
+    }
+  }else if(analogRead(_piezo1) > _threshold1){ // checks for new onset for snare
+    // set the new onset
+    if(_currentMillis > _nextAllowedOnsetSnare){
+      onsets[next] = _currentMillis;
+      isSnare[next] = 1;
+      currentOnset = next;
+      //Serial.print("<----------------------onset: ");Serial.println(_currentMillis);
+      next = (next + 1) % onsetsLength;
+      _nextAllowedOnsetSnare = _currentMillis + _bounceTime1;
       return true;
     }
   }

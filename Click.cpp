@@ -22,7 +22,7 @@ void Click::updateTauSync(long deltaTauSync){
 
 void Click::updateTauTempo(long deltaTauTempo){
   tau = tau + deltaTauTempo;
-  Serial.print("new tau "); Serial.print(tau);Serial.print(" bpm=");Serial.print(round(60000.0/(2*tau)));Serial.println("-------------------");
+  Serial.print("new tau "); Serial.print(tau);Serial.print(" bpm=");Serial.println(round(60000.0/(2*tau)));
 }
 
 void Click::updateClick(){

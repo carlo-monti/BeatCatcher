@@ -25,7 +25,6 @@ void Tempo::updateTempo(){
   long errorWin = 0; // error of the winner interval
   int vWin = 0; // v of the winner interval
   long deltaTauTempo = 0;
- // Serial.println("--------------------");
   // read every onset from last to next-2
   int i=_ons->last;
   while(i != _ons->currentOnset){

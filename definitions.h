@@ -15,9 +15,9 @@
 #define dKey 4 // 
 #define cKey 5 // 
 #define mode 6 // mode switch
-#define piezo1 A16 //
-#define piezo2 A14 //
-#define piezo3 A15 //
+#define piezo0 A16 //
+#define piezo1 A14 //
+#define piezo2 A15 //
 #define pot A17 //
 #define buzzer 14 //
 
@@ -27,9 +27,9 @@ void setupPinsAndParameters(){
   pinMode(redLed,OUTPUT);
   pinMode(internalLed,OUTPUT);
   pinMode(buzzer,OUTPUT);
+  pinMode(piezo0,INPUT);
   pinMode(piezo1,INPUT);
   pinMode(piezo2,INPUT);
-  pinMode(piezo3,INPUT);
   pinMode(aKey,INPUT_PULLUP);
   pinMode(bKey,INPUT_PULLUP);
   pinMode(cKey,INPUT_PULLUP);
