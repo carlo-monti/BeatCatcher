@@ -18,7 +18,7 @@ void Onset::setThreshold(int thr){
 void Onset::initializeOnset(){
   for(int i=0;i<onsetsLength;i++){
     onsets[i]=0;
-    syncDone[i]=false;
+    is16th[i]=0;
   }
   _nextAllowedOnset = 0;
   last = 0;
@@ -26,10 +26,11 @@ void Onset::initializeOnset(){
 }
 
 bool Onset::updateOnset(){
+  
   _currentMillis = millis();
   // update the index of last relevant onset
   while(onsets[last] < (_currentMillis - (_clk->tau * 8))){
-    syncDone[last] = false;
+    is16th[last] = 0;
     if(last == next){
       break;
     }
@@ -41,7 +42,8 @@ bool Onset::updateOnset(){
     // set the new onset
     if(_currentMillis > _nextAllowedOnset){
       onsets[next] = _currentMillis;
-      //Serial.print("<-onset: ");Serial.println(_currentMillis);
+      currentOnset = next;
+      //Serial.print("<----------------------onset: ");Serial.println(_currentMillis);
       next = (next + 1) % onsetsLength;
       _nextAllowedOnset = _currentMillis + _bounceTime;
       return true;

@@ -4,7 +4,7 @@ Click::Click(int piezo){
   _piezoPin = piezo;
   _nextClick = 0;
   _bounceTime = 150;
-  _threshold = 20;
+  _threshold = 15;
 }
 
 void Click::initializeClick(){
@@ -31,7 +31,11 @@ void Click::updateClick(){
   if(_currentMillis > _nextClick){
     _nextClick = _currentMillis + tau;
     //Serial.print("Click ");Serial.println(barPosition);
-    tone(14, 440, 50);
+    if(barPosition == 0 || barPosition == 8){
+      tone(22, 300, 50);
+    }else{
+      tone(14, 140, 10);  
+    }
   }
   
   if(_currentMillis > _nextHalfClick){

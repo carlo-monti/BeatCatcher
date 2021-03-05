@@ -11,6 +11,7 @@ class Sync{
     void setBeta(float value);
     void setThreshold(float value);
     void updateSync();
+    void updateLayer();
     
   private:
     Click* _clk; // pointer to click object
@@ -19,6 +20,12 @@ class Sync{
     int _sigmaSync; 
     float _thetaSync; // threshold
     float _beta; // scaling factor
+    int _currentHigherLayer;
+    float _lastAccuracyOfCurrentLayer;
+    int _lastBarPosition; // to detect bar change
+    float _accuracyOfLastSync[16];
+    float _narrowWindowRatio = 1; // set a value between 1 and 0.1
+    float _expandWindowRatio = 1; 
 };
 
 #endif

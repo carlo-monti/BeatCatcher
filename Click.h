@@ -15,6 +15,7 @@ class Click{
     int tau; // tactum in ms: 1/8
     long expectedClick; // currentExpectedClick (absolute value)
     int barPosition; // current position within the 2 bar length (0-15)
+    int layerOf[16] = {3,0,1,0,2,0,1,0,3,0,1,0,2,0,1,0}; //
     
   private:
     
