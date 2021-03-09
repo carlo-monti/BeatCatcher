@@ -1,8 +1,8 @@
 #include "Sync.h"
 
-Sync::Sync(Onset &onsets, Click &clk){
-  _ons = &onsets;
-  _clk = &clk;
+Sync::Sync(Onset *onsets, Click *clk){
+  _ons = onsets;
+  _clk = clk;
 }
 
 void Sync::initializeSync(){

@@ -5,7 +5,7 @@
 
 class Sync{
   public:
-    Sync(Onset &onsets, Click &clk);
+    Sync(Onset *onsets, Click *clk);
     void initializeSync();
     void setLSync(bool type, int index, float value);
     void setBeta(float value);

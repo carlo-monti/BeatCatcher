@@ -4,7 +4,7 @@ Click::Click(int piezo){
   _piezoPin = piezo;
   _nextClick = 0;
   _bounceTime = 150;
-  _threshold = 15;
+  _threshold = 40;
 }
 
 void Click::initializeClick(){

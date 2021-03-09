@@ -1,9 +1,9 @@
 #include "definitions.h"
 
 Click clk = Click(piezo0);
-Onset ons = Onset(clk, piezo0, piezo1);
-Sync syn = Sync(ons, clk);
-Tempo tmp = Tempo(ons, clk);
+Onset ons = Onset(&clk, piezo0, piezo1);
+Sync syn = Sync(&ons, &clk);
+Tempo tmp = Tempo(&ons, &clk);
 
 void setup() {
   Serial.begin(9600);

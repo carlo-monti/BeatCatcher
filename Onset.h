@@ -7,7 +7,7 @@
 class Onset{
   public:
   
-    Onset(Click &clk, int piezo0, int piezo1);
+    Onset(Click *clk, int piezo0, int piezo1);
     void setThreshold(bool piezo, int thr);
     void setBounceTime(bool piezo, int bounce);
     void initializeOnset(); // to be called in setup

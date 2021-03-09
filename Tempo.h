@@ -5,7 +5,7 @@
 
 class Tempo{
   public:
-    Tempo(Onset &onsets, Click &clk);
+    Tempo(Onset *onsets, Click *clk);
     void initializeTempo();
     void setLTempo(int index, float value);
     void setAlpha(float value);

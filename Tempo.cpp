@@ -1,8 +1,8 @@
 #include "Tempo.h"
 
-Tempo::Tempo(Onset &onsets, Click &clk){
-  _ons = &onsets;
-  _clk = &clk;
+Tempo::Tempo(Onset *onsets, Click *clk){
+  _ons = onsets;
+  _clk = clk;
 }
 
 void Tempo::initializeTempo(){
