@@ -11,7 +11,7 @@ class Click{
     void initializeClick();
     void updateClick();
     void resetClick(); // to be called at run-time to set new tempo
-    
+
     int tau; // tactum in ms: 1/8
     long expectedClick; // currentExpectedClick (absolute value)
     int barPosition; // current position within the 2 bar length (0-15)
@@ -26,9 +26,11 @@ class Click{
     long _nextClick; // next scheduled click
     long _nextHalfClick; // point between two scheduled clicks
     long _deltaTauSync; // delta for the synchronizing process
-    int _midiTau; // value for midi
-    long _nextMidiClick;
-    
+    long _deltaTauAlign; // deltaTau to add for compensate tempo change
+    bool _hasAlreadyUpdated;
+    long _midiTau; // value for midi
+    long _nextMidiClock;
+    int _midiClockSent;
 };
 
 #endif

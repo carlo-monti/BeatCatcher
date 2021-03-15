@@ -6,7 +6,7 @@ Sync syn = Sync(&ons, &clk);
 Tempo tmp = Tempo(&ons, &clk);
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(92600);
   setupPinsAndParameters(); // from definitions.h
   clk.initializeClick();
   ons.initializeOnset();
@@ -15,7 +15,9 @@ void setup() {
 }
 
 void loop() {
+  
   if(digitalRead(aKey)==0){
+    /*Serial.print(millis()); Serial.print(",");Serial.println(analogRead(piezo0));*/
     Serial.println("Reset");
     delay(300);
     clk.resetClick();

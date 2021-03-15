@@ -54,7 +54,6 @@ bool Onset::updateOnset(){
       onsets[next] = _currentMillis;
       isSnare[next] = 0;
       currentOnset = next;
-      Serial.print("<----------------------onset0: ");Serial.println(_currentMillis);
       next = (next + 1) % onsetsLength;
       _nextAllowedOnsetKick = _currentMillis + _bounceTime0;
       return true;
@@ -65,7 +64,6 @@ bool Onset::updateOnset(){
       onsets[next] = _currentMillis;
       isSnare[next] = 1;
       currentOnset = next;
-      Serial.print("<----------------------onset1: ");Serial.println(_currentMillis);
       next = (next + 1) % onsetsLength;
       _nextAllowedOnsetSnare = _currentMillis + _bounceTime1;
       return true;

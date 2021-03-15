@@ -16,8 +16,8 @@ class Sync{
   private:
     Click* _clk; // pointer to click object
     Onset* _ons; // pointer to onset object
-    float _lSyncKick[16] = {1,0.4,1,0.4,1,0.4,1,0.4,1,0.4,1,0.4,1,0.4,1,0.4}; // likelihood of observing onset for kick
-    float _lSyncSnare[16] = {0,0.4,1,0.4,1,0.4,1,0.4,0,0.4,1,0.4,1,0.4,1,0.4}; // likelihood of observing onset for snare
+    float _lSyncKick[16] = {1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1}; // likelihood of observing onset for kick
+    float _lSyncSnare[16] = {0,0.1,1,0.1,1,0.1,1,0.1,0,0.1,1,0.1,1,0.1,1,0.1}; // likelihood of observing onset for snare
     int _sigmaSync; 
     float _thetaSync; // threshold
     float _beta; // scaling factor
@@ -26,7 +26,10 @@ class Sync{
     int _lastBarPosition; // to detect bar change
     float _accuracyOfLastSync[16];
     float _narrowWindowRatio = 1; // set a value between 1 and 0.1
-    float _expandWindowRatio = 1; 
+    float _expandWindowRatio = 1;
+    long lastMillisForPrint;
+    bool onsetKickPerStampa;
+    bool onsetSnarePerStampa;
 };
 
 #endif
