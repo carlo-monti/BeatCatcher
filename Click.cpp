@@ -32,10 +32,10 @@ void Click::updateClick(){
   _currentMillis = millis();
   
   if(_currentMillis >= _nextClick){
-    Serial.print("<---");Serial.println(barPosition);
+    //Serial.print("<---");Serial.println(barPosition);
     _nextClick = _currentMillis + tau + _deltaTauAlign;
     _deltaTauAlign = 0;
-    Serial.println("MIDI Clock first");
+    //Serial.println("MIDI Clock first");
     _midiTau = (_nextHalfClick - _currentMillis) / 6;
     _nextMidiClock = _nextMidiClock + _midiTau;
     _midiClockSent = 0;
@@ -47,7 +47,7 @@ void Click::updateClick(){
   }else if(_currentMillis >= _nextHalfClick){
     _nextClick = _nextClick + _deltaTauSync;
     _deltaTauSync = 0;
-    Serial.println("MIDI Clock half");
+    //Serial.println("MIDI Clock half");
     _midiTau = (_nextClick - _currentMillis) / 6;
     _nextMidiClock = _nextMidiClock + _midiTau;
     _midiClockSent = 0;
@@ -57,7 +57,7 @@ void Click::updateClick(){
   }else if(_currentMillis >= _nextMidiClock){
     if(_midiClockSent < 5){
       //send MIDI CLock
-      Serial.println("MIDI Clock");
+      //Serial.println("MIDI Clock");
       //Serial.println(_midiTau);
       _nextMidiClock = _currentMillis + _midiTau;
       _midiClockSent++;

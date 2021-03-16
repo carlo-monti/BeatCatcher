@@ -50,7 +50,8 @@ void Sync::updateSync(){
     //Serial.println("SYNC Kick -----------");
     lSync = _lSyncKick[_clk->barPosition];
   }
-  if(error > ((_clk->tau) / 3)){ // notch for 16th
+  int thirdOfTau = (_clk->tau) / 3;
+  if(_sigmaSync < thirdOfTau && abs(error) > thirdOfTau){ // notch for 16th
     _ons->is16th[_ons->currentOnset] = true;
     //Serial.println("On notch");
     return;
@@ -78,7 +79,7 @@ void Sync::updateSync(){
         // higher threshold, narrow window
         _thetaSync = _thetaSync + (0.3 * (accuracy - _thetaSync - 0.1));
         _sigmaSync = max((_clk->tau) / 20,_sigmaSync * (_narrowWindowRatio + ((0.7 * lSync) - accuracy))); // calculate sigma from current tau
-        //Serial.print(" new threshold: "); Serial.print(_thetaSync); Serial.print(" new sigmaSync: ");Serial.print(_sigmaSync);
+        //Serial.print(" new threshold: "); Serial.print(_thetaSync); Serial.print(" new sigmaSync: ");Serial.println(_sigmaSync);
       }
       //Serial.println();
     }
@@ -111,7 +112,7 @@ void Sync::updateLayer(){
     _lastBarPosition = _clk->barPosition;
     //Serial.print("------ NEW bar position: ");Serial.print(_clk->barPosition);Serial.print(" layer: ");Serial.println(_currentHigherLayer);
   }
-  /* solo per stampa --------------*/
+  /* solo per stampa -------------- */
   long curr = millis();
   if(curr > lastMillisForPrint){
     int thisLayer = _clk->layerOf[_clk->barPosition]; // layer of this onset
@@ -125,10 +126,10 @@ void Sync::updateLayer(){
       int twoSigmaSquared = -2 * pow(_sigmaSync,2); // calculate -2 * sigma^2
       gaussian = exp(pow(error,2) / twoSigmaSquared); // calculate gaussian
     }
-    //Serial.print(curr);Serial.print(",");Serial.print(onsetKickPerStampa);Serial.print(",");Serial.print(onsetSnarePerStampa);Serial.print(",");Serial.print(gaussian);Serial.print(",");Serial.print(_thetaSync);Serial.println(";");
+    Serial.print(curr);Serial.print(",");Serial.print(onsetKickPerStampa);Serial.print(",");Serial.print(onsetSnarePerStampa);Serial.print(",");Serial.print(gaussian);Serial.print(",");Serial.println(_thetaSync);
     lastMillisForPrint = curr;
     onsetKickPerStampa = false;
     onsetSnarePerStampa = false;
-    /* per stampa --------------------*/
   }
+  /* per stampa --------------------*/
 }

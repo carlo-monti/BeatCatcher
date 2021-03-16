@@ -4,8 +4,8 @@ Onset::Onset(Click *clk, int piezo0, int piezo1){
   _clk = clk;
   _piezo0 = piezo0;
   _piezo1 = piezo1;
-  _bounceTime0 = 100;
-  _bounceTime1 = 100;
+  _bounceTime0 = 150;
+  _bounceTime1 = 150;
   _threshold0 = 40;
   _threshold1 = 40;
 }
