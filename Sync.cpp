@@ -9,7 +9,7 @@ void Sync::initializeSync(){
   _thetaSync = 0.80;
   _beta = 0;
   lastMillisForPrint = 0;
-  _sigmaSync = _clk->tau / 5;
+  _sigmaSync = _clk->tau / 20;
   for(int i=0; i<16; i++){
     _accuracyOfLastSync[i] = 0;
   }
