@@ -39,7 +39,7 @@ void Onset::initializeOnset(){
 
 bool Onset::updateOnset(){
   
-  _currentMillis = millis();
+  long _currentMillis = millis();
   // update the index of last relevant onset
   while(onsets[last] < (_currentMillis - (_clk->tau * 8))){
     is16th[last] = 0;

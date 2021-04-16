@@ -1,5 +1,5 @@
-#ifndef DEFINITIONS
-#define DEFINITIONS
+#ifndef DEFINITIONS_H
+#define DEFINITIONS_H
 
 #include "Click.h"
 #include "Onset.h"
@@ -35,8 +35,8 @@ void setupPinsAndParameters(){
   pinMode(cKey,INPUT_PULLUP);
   pinMode(dKey,INPUT_PULLUP);
   pinMode(mode,INPUT_PULLUP);
-  analogReadRes(10); // reduce analog read resolution
-  analogReadAveraging(2); // reduce analog read averaging
+  //analogReadRes(10); // reduce analog read resolution
+  //analogReadAveraging(2); // reduce analog read averaging
 }
 
 #endif
