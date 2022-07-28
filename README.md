@@ -8,7 +8,7 @@ This project is the porting of the **B-Keeper** beat-tracking algorithm to an Ar
 The input signal came from two piezo sensors placed on kick and snare. The signal pass through a smoothing filter and a limiter (to 3.3V) and then go to the Analog In pin. <img width="839" alt="circuito" src="https://user-images.githubusercontent.com/79301372/181357966-652a7ec0-a377-424d-9434-f0e07ecfd4c4.png">
 
 ## Code structure
-Basically there are five objects, whose work is coordinated by the main "BeatCatcher.ino" file. The **Click** object calculate and outputs the MIDI Clock signal. The **Onset** object samples the two inputs and detect a hit. The **Sync** object evaluates and mantain the sync and keeps track of the current layer (see the article). The **Tempo** object checks if there are significant tempo changes. The whose
+Basically there are five objects, whose work is coordinated by the main ''BeatCatcher.ino'' file. The **Click** object calculate and outputs the MIDI Clock signal. The **Onset** object samples the two inputs and detect a hit. The **Sync** object evaluates and mantain the sync and keeps track of the current layer (see the article). The **Tempo** object checks if there are significant tempo changes. The whose
 
 ## How to
 
