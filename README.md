@@ -1,4 +1,4 @@
-# DrumBeatFollower
+# BeatCatcher
 Beat tracker for Arduino compatible microcontrollers (i.e. Teensy / ESP32).
 
 ## About
