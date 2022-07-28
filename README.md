@@ -1,5 +1,5 @@
 # BeatCatcher
-Beat tracker for Arduino compatible microcontrollers (i.e. Teensy / ESP32).
+A beat-tracker for Arduino compatible microcontrollers (i.e. Teensy / ESP32).
 
 ## About
 This project is the porting of the **B-Keeper** beat-tracking algorithm to an Arduino compatible device. It basically takes two input signals from a drum-kit (kick and snare) and outputs a MIDI Clock synchronized with the groove played by the drummer. The clock is started by hitting four times a pad (or a simple button) that act as a tap-tempo: this sets the initial tempo and starts the MIDI Clock output. Once started, the algorithm does its best to stay in time with the drummer, given that there are no big tempo-changes and the time signature is 4/4.
