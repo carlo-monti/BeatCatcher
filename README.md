@@ -12,7 +12,7 @@ The input signal came from two piezo sensors placed on kick and snare. The signa
 <img width="839" alt="circuito" src="https://user-images.githubusercontent.com/79301372/181357966-652a7ec0-a377-424d-9434-f0e07ecfd4c4.png">
 
 ## Code structure
-Basically there are five objects, whose work is coordinated by the main ``BeatCatcher.ino`` file. The **Click** object calculate and outputs the MIDI Clock signal. The **Onset** object samples the two inputs and detect a hit. The **Sync** object evaluates and mantain the sync and keeps track of the current layer (see the cited article). The **Tempo** object checks if there are significant tempo changes. The **InputOutput** object is used to set internal parameters and display events.
+Basically there are five objects, whose work is coordinated by the main ``BeatCatcher.ino`` file. The **Click** object calculate and outputs the MIDI Clock signal. The **Onset** object samples the two inputs and detect a hit. The **Sync** object evaluates and mantain the sync and keeps track of the current *layer* (see the cited article). The **Tempo** object checks if there are significant tempo changes. The **InputOutput** object is used to set internal parameters and display events.
 
 ## How to use
 
