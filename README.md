@@ -17,5 +17,6 @@ Basically there are five objects, whose work is coordinated by the main ``BeatCa
 ## How to use
 
 
+
 ## References
 The original algorithm has been described in: Robertson, Andrew, and Mark D. Plumbley. “Synchronizing Sequencing Software to a Live Drummer.” Computer Music Journal, vol. 37, no. 2, 2013, pp. 46–60. (JSTOR, http://www.jstor.org/stable/24265466. Accessed 27 Jul. 2022.). 
