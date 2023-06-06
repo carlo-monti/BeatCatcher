@@ -19,18 +19,6 @@ void setup() {
   ons.initializeOnset();
   syn.initializeSync();
   tmp.initializeTempo();
-  if(true){
-    clk.setSwingMode(true);
-    syn.setSwingMode(true);
-    ons.setSwingMode(true);
-    tmp.setSwingMode(true);
-  }else{
-    clk.setSwingMode(false);
-    syn.setSwingMode(false);
-    ons.setSwingMode(false);
-    tmp.setSwingMode(false);
-  }
-  syn.setTwoBarsLength(true);
   clk.initializeClick();                    // initialize all the objects
 }
 
