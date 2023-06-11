@@ -25,7 +25,7 @@ void setup() {
 void loop() {
   if(digitalRead(aKey)==0){
     Serial.println("Reset");
-    delay(300);
+    delay(300); // debounce
     clk.resetClick();
   }
   clk.updateClick();                        // update the Click obj
